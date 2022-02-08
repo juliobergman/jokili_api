@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,11 @@ Route::middleware('auth:sanctum')->prefix('/user')->group(function(){
     Route::get('/create', [UserController::class, 'create']);
     Route::get('/edit', [UserController::class, 'edit']);
     Route::get('/destroy/{user}', [UserController::class, 'destroy']);
+});
+
+
+
+// Uploads
+Route::middleware('auth:sanctum')->prefix('/upload')->group(function(){
+    Route::post('/avatar/user', [UploadController::class, 'useravatar']);
 });

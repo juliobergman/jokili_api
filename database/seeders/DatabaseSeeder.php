@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
-            UserSeeder::class,
             CountrySeeder::class,
-            // TokenSeeder::class
+            StatusSeeder::class,
+            UserSeeder::class,
         ]);
 
     }

@@ -19,7 +19,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'role',
         'email',
         'password',
     ];
@@ -34,6 +36,10 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_secret',
         'two_factor_recovery_codes',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'user_id',
     ];
 
     /**
@@ -43,7 +49,27 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'full_name' => 'string'
     ];
+
+    protected $appends = [
+        'full_name',
+        'display_name'
+    ];
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getDisplayNameAttribute()
+    {
+        $dname = explode(' ', $this->first_name);
+        $dlast = explode(' ', $this->last_name);
+        $displayName = $dname[0].' '.$dlast[0];
+        
+        return "{$dname[0]} {$dlast[0]}";
+    }
 
     public function userdata()
     {

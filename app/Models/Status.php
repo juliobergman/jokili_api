@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+    protected $fillable = [
+        'name',
+        'color',
+    ];
 }

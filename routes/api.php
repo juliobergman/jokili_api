@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\StatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +20,21 @@ use App\Http\Controllers\UploadController;
 */
 // Login
 Route::post('/login', [AuthController::class, 'login']);
-
+// Password Reset
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('guest')->name('password.email');
+Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+// Verify Email
+Route::post('/email/verification-notification', [AuthController::class, 'emailVerificationSend'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'emailVerificationVerify'])->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
 // User
 Route::middleware('auth:sanctum')->prefix('/user')->group(function(){
     Route::get('/auth', [AuthController::class, 'auth']);
     Route::get('/show/{user}', [UserController::class, 'show']);
+    Route::put('/update/{user}', [UserController::class, 'update']);
+    Route::get('/godfathers', [UserController::class, 'godfathers']);
     // -----------------------------------------------------------
     Route::get('/', [UserController::class, 'index']);
-    Route::put('/update/{user}', [UserController::class, 'update']);
     // -----------------------------------------------------------
     Route::post('/store', [UserController::class, 'store']);
     Route::get('/create', [UserController::class, 'create']);
@@ -38,4 +47,9 @@ Route::middleware('auth:sanctum')->prefix('/user')->group(function(){
 // Uploads
 Route::middleware('auth:sanctum')->prefix('/upload')->group(function(){
     Route::post('/avatar/user', [UploadController::class, 'useravatar']);
+});
+
+// Country
+Route::middleware('auth:sanctum')->prefix('/country')->group(function(){
+    Route::get('/', [CountryController::class, 'index']);
 });

@@ -18,8 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
-            $table->enum('role', ['subscriber','member','admin','superadmin'])->default('subscriber');
+            $table->enum('role', ['subscriber','applicant','member','admin','superadmin'])->default('subscriber');
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('verified')->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->softDeletes();

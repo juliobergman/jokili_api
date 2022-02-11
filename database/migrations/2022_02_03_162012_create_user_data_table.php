@@ -22,27 +22,26 @@ class CreateUserDataTable extends Migration
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->text('address')->nullable();
-            $table->string('citizenship')->nullable();
             // Personal Data
+            $table->string('citizenship')->nullable();
             $table->enum('id_prefix', ['V-','E-','P-'])->nullable();
             $table->string('id_number')->nullable();
             $table->string('occupation')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->date('birth_at')->nullable();
-            $table->string('birth_place')->nullable();
+            $table->string('birthplace')->nullable();
             // Jokili Data
-            $table->unsignedBigInteger('godfather')->nullable();
-            $table->foreign('godfather')->references('id')->on('users');
             $table->bigInteger('number')->nullable();
             $table->string('position')->nullable();
-            $table->date('zunftrat_in')->nullable();
-            $table->date('zunftrat_out')->nullable();
-            $table->text('avatar')->nullable();
             $table->date('member_since')->nullable();
             $table->boolean('mask')->default(false);
-            $table->unsignedBigInteger('status')->nullable();
-            $table->foreign('status')->references('id')->on('statuses');
+            $table->unsignedBigInteger('godfather')->nullable();
+            $table->foreign('godfather')->references('id')->on('users');
+            $table->date('zunftrat_in')->nullable();
+            $table->date('zunftrat_out')->nullable();
+            $table->unsignedBigInteger('status')->default(1);
             // System
+            $table->string('avatar')->default('/storage/factory/avatar/misc/avatar-user.jpg');
             $table->softDeletes();
             $table->timestamps();
         });

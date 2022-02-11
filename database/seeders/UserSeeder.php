@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'occupation' => 'Desarrollador',
             'gender' => 'male',
             'birth_at' => '1988-07-27',
-            'birth_place' => 'Caracas',
+            'birthplace' => 'Caracas',
             'godfather' => null,
             'number' => 63,
             'position' => 'Jokili',
@@ -48,13 +48,56 @@ class UserSeeder extends Seeder
             'first_name' => env('OWNER_FIRST_NAME'),
             'last_name' => env('OWNER_LAST_NAME'),
             'email' => env('OWNER_EMAIL'),
-            'email_verified_at' => now(),
+            'email_verified_at' => null,
+            'role' => 'superadmin',
             'password' => Hash::make(env('OWNER_PASSWORD')),
+            'verified' => true,
             'remember_token' => Str::random(10),
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ])
         ->create();
+
+        User::factory(6)
+        ->has(UserData::factory())
+        ->state([
+            'role' => 'subscriber',
+        ])
+        ->create();
+
+        User::factory(2)
+        ->has(UserData::factory())
+        ->state([
+            'role' => 'applicant',
+        ])
+        ->create();
+
+        User::factory(5)
+        ->has(UserData::factory())
+        ->state([
+            'role' => 'member',
+        ])
+        ->create();
+
+        User::factory(2)
+        ->has(UserData::factory())
+        ->state([
+            'role' => 'admin',
+        ])
+        ->create();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         DB::table('personal_access_tokens')->insert([
             'id' => 1,

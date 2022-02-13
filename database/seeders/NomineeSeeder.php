@@ -16,7 +16,7 @@ class NomineeSeeder extends Seeder
      */
     public function run()
     {
-        Nominee::factory(3)
+        Nominee::factory(20)
         ->state(new Sequence(
             fn ($sequence) => ['user_id' => User::all()->random()],
         ))

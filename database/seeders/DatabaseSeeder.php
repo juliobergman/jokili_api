@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ElectionSeeder::class,
             PositionSeeder::class,
-            // NomineeSeeder::class,
+            NomineeSeeder::class,
             // ElectionResultSeeder::class,
         ]);
 

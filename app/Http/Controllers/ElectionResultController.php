@@ -73,7 +73,7 @@ class ElectionResultController extends Controller
         $vt->join('positions', 'election_results.position_id', '=', 'positions.id');
         $vt->join('users', 'election_results.nominee_id', '=', 'users.id');
         $vt->join('users as voter', 'election_results.user_id', '=', 'voter.id');
-        $vt->join('user_data', 'election_results.user_id', '=', 'user_data.user_id');
+        $vt->join('user_data', 'election_results.nominee_id', '=', 'user_data.user_id');
         // Order By
         $vt->orderBy('id');
 
@@ -108,7 +108,7 @@ class ElectionResultController extends Controller
                 $positions[$pos->id]['total_votes'] = $votes->where('position_id', $pos->id)->where('user_verified', true)->count();
             }
         }
-        
+
         $ret = [
             'election_results' => $positions,
             'verified_votes' => $verified_votes,

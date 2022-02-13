@@ -14,7 +14,7 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        //
+        return Election::all();
     }
 
     /**
@@ -46,7 +46,7 @@ class ElectionController extends Controller
      */
     public function show(Election $election)
     {
-        //
+        return $election;
     }
 
     /**

@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     
     
-    protected $data_select = [
+    public $data_select = [
         // Users
         'users.id',
         'users.first_name',
@@ -23,34 +23,31 @@ class UserController extends Controller
         'users.role',
         // UserData
         'user_data.*',
-        // 'user_data.site',
-        // 'user_data.phone',
-        // 'user_data.country',
-        // 'user_data.city',
-        // 'user_data.address',
-        // 'user_data.gender',
-        // 'user_data.avatar',
         // Country
         'countries.name as country_name',
         'countries.region as country_region',
         'countries.subregion as country_subregion',
         'countries.latitude as country_latitude',
         'countries.longitude as country_longitude',
-        // Godfather
-        'user_data.godfather',
-        'godfathers.first_name as godfather_first_name',
-        'godfathers.last_name as godfather_last_name',
     ];
     
     
     public function show(User $user)
     {
 
+        
+        $select = [
+            'godfathers.first_name as godfather_first_name',
+            'godfathers.last_name as godfather_last_name',
+        ];
+        
         $uq = User::query();
         // Where
         $uq->where('users.id', $user->id);
         // Selects
-        $uq->select($this->data_select);
+        $uq->select(array_merge($this->data_select, $select));
+        // 
+        $uq->with('elections');
         // Join
         $uq->join('user_data', 'users.id', '=', 'user_data.user_id');
         $uq->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');

@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class UserSeeder extends Seeder
 {
@@ -48,7 +49,7 @@ class UserSeeder extends Seeder
             'first_name' => env('OWNER_FIRST_NAME'),
             'last_name' => env('OWNER_LAST_NAME'),
             'email' => env('OWNER_EMAIL'),
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'role' => 'superadmin',
             'password' => Hash::make(env('OWNER_PASSWORD')),
             'verified' => true,
@@ -58,33 +59,62 @@ class UserSeeder extends Seeder
         ])
         ->create();
 
-        User::factory(6)
-        ->has(UserData::factory())
-        ->state([
-            'role' => 'subscriber',
-        ])
-        ->create();
+        // User::factory(6)
+        // ->has(UserData::factory())
+        // ->state([
+        //     'role' => 'subscriber',
+        // ])
+        // ->create();
 
-        User::factory(2)
-        ->has(UserData::factory())
-        ->state([
-            'role' => 'applicant',
-        ])
-        ->create();
+        // User::factory(2)
+        // ->has(UserData::factory())
+        // ->state([
+        //     'role' => 'applicant',
+        // ])
+        // ->create();
 
-        User::factory(5)
-        ->has(UserData::factory())
+        User::factory(32)
+        ->has(UserData::factory()
+        ->state(new Sequence(
+            ['avatar' => '/storage/factory/avatar/female/avatar-11.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-1.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-1.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-2.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-2.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-3.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-3.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-4.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-4.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-5.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-5.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-6.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-6.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-7.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-7.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-8.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-8.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-9.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-9.jpg'],
+            ['avatar' => '/storage/factory/avatar/male/avatar-10.jpg'],
+            ['avatar' => '/storage/factory/avatar/female/avatar-10.jpg'],
+        ))
+        )
         ->state([
             'role' => 'member',
         ])
+        ->state(new Sequence(
+            ['verified' => true],
+            ['verified' => true],
+            ['verified' => false],
+        ))
         ->create();
 
-        User::factory(2)
-        ->has(UserData::factory())
-        ->state([
-            'role' => 'admin',
-        ])
-        ->create();
+        // User::factory(8)
+        // ->has(UserData::factory())
+        // ->state([
+        //     'role' => 'admin',
+        // ])
+        // ->create();
 
 
 

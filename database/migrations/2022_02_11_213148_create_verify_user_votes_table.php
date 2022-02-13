@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElectionsTable extends Migration
+class CreateVerifyUserVotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateElectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('elections', function (Blueprint $table) {
+        Schema::create('verify_user_votes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->integer('status')->default(1);
-            $table->dateTime('start')->nullable();
-            $table->dateTime('end')->nullable();
+            $table->foreignId('user_id')->nullable()->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('election_id')->nullable()->foreign('election_id')->references('id')->on('elections');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateElectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('elections');
+        Schema::dropIfExists('verify_user_votes');
     }
 }

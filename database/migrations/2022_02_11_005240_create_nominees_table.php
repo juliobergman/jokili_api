@@ -15,8 +15,14 @@ class CreateNomineesTable extends Migration
     {
         Schema::create('nominees', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('election_id')->constrained();
             $table->foreignId('position_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained();
+
+            // Unique
+            // $table->unique(['election_id','position_id','user_id'], 'unicus');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

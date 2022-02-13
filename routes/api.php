@@ -1,12 +1,17 @@
 <?php
 
 use Illuminate\Http\Request;
+use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CountryController;
-use App\Http\Controllers\StatusController;
+use App\Http\Controllers\NomineeController;
+use App\Http\Controllers\ElectionController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ElectionResultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +47,16 @@ Route::middleware('auth:sanctum')->prefix('/user')->group(function(){
     Route::get('/destroy/{user}', [UserController::class, 'destroy']);
 });
 
+// Elections
+Route::middleware('auth:sanctum')->prefix('/election')->group(function(){
+    Route::get('/', [ElectionController::class, 'index']);
+    Route::get('/{election}', [ElectionController::class, 'show']);
+    Route::get('/{election}/position', [PositionController::class, 'index']);
+    Route::get('/position/{position}', [PositionController::class, 'show']);
+    Route::get('/{position}/nominee', [NomineeController::class, 'index']);
+    Route::post('/submit', [ElectionResultController::class, 'submit']);
+    Route::post('/results', [ElectionResultController::class, 'results']);
+});
 
 
 // Uploads
@@ -52,4 +67,13 @@ Route::middleware('auth:sanctum')->prefix('/upload')->group(function(){
 // Country
 Route::middleware('auth:sanctum')->prefix('/country')->group(function(){
     Route::get('/', [CountryController::class, 'index']);
+});
+
+
+
+
+Route::get('/clear-cache', function() {
+    $configCache = Artisan::call('config:cache');
+    $clearCache = Artisan::call('cache:clear');
+    return [$configCache, $clearCache];
 });

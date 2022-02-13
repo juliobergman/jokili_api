@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Election;
-use App\Models\Position;
+use App\Models\VerifyUserVote;
 use Illuminate\Http\Request;
 
-class PositionController extends Controller
+class VerifyUserVoteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Election $election)
+    public function index()
     {
-        return Position::where('election_id', $election->id)->with('nominees')->get();
+        //
     }
 
     /**
@@ -42,21 +41,21 @@ class PositionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Position  $position
+     * @param  \App\Models\VerifyUserVote  $verifyUserVote
      * @return \Illuminate\Http\Response
      */
-    public function show(Position $position)
+    public function show(VerifyUserVote $verifyUserVote)
     {
-        return $position;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Position  $position
+     * @param  \App\Models\VerifyUserVote  $verifyUserVote
      * @return \Illuminate\Http\Response
      */
-    public function edit(Position $position)
+    public function edit(VerifyUserVote $verifyUserVote)
     {
         //
     }
@@ -65,10 +64,10 @@ class PositionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Position  $position
+     * @param  \App\Models\VerifyUserVote  $verifyUserVote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Position $position)
+    public function update(Request $request, VerifyUserVote $verifyUserVote)
     {
         //
     }
@@ -76,10 +75,10 @@ class PositionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Position  $position
+     * @param  \App\Models\VerifyUserVote  $verifyUserVote
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Position $position)
+    public function destroy(VerifyUserVote $verifyUserVote)
     {
         //
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Nominee;
+use App\Models\Position;
 use Illuminate\Http\Request;
 
 class NomineeController extends Controller
@@ -12,9 +13,33 @@ class NomineeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Position $position)
     {
-        //
+        
+        $import_select = (new UserController)->data_select;
+        $nominee_select = [
+            'nominees.id as nominee_id',
+            'positions.id as position_id',
+            'positions.name as position_name',
+        ];
+        $select = array_merge($nominee_select,$import_select);
+        
+        $nom = Nominee::query();
+        // Where
+        $nom->where('position_id', $position->id);
+        // Selects
+        $nom->select($select);
+        // Join
+        $nom->leftJoin('users', 'nominees.user_id', '=', 'users.id');
+        $nom->join('user_data', 'users.id', '=', 'user_data.user_id');
+        $nom->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');
+        $nom->leftJoin('positions', 'nominees.position_id', '=', 'positions.id');
+        // Order
+        $nom->orderBy('users.id', 'asc');
+        
+        return $nom->get();
+        
+        return Nominee::where('position_id', $position->id)->get(); 
     }
 
     /**

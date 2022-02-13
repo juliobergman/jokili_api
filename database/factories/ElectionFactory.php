@@ -14,7 +14,10 @@ class ElectionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->catchPhrase(),
+            'status' => 1,
+            'start' => now(),
+            'end' => '2022-06-09',
         ];
     }
 }

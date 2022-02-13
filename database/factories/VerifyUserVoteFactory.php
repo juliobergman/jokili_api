@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PositionFactory extends Factory
+class VerifyUserVoteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,9 +14,7 @@ class PositionFactory extends Factory
     public function definition()
     {
         return [
-            'election_id' => 1,
-            'name' => $this->faker->jobTitle(),
-            'info' => $this->faker->text(),
+            //
         ];
     }
 }

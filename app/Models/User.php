@@ -66,6 +66,7 @@ class User extends Authenticatable
         'is_admin',
         'is_member',
         'is_applicant',
+        'voted',
         'member_since_year',
     ];
 
@@ -117,7 +118,7 @@ class User extends Authenticatable
     {
         return $this->member_since ? date_diff(date_create($this->member_since), date_create(date("Y-m-d")))->format('%y') : null;
     }
-
+    
     public function getDisplayNameAttribute()
     {
         $dname = explode(' ', $this->first_name);
@@ -127,8 +128,18 @@ class User extends Authenticatable
         return "{$dname[0]} {$dlast[0]}";
     }
     
+    public function getVotedAttribute()
+    {
+        return VerifyUserVote::where('user_id', $this->id)->first() ? true : false;
+    }
+
     public function userdata()
     {
         return $this->hasOne(UserData::class);
+    }
+
+    public function elections()
+    {
+        return $this->hasMany(VerifyUserVote::class);
     }
 }

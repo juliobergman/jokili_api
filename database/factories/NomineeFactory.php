@@ -14,7 +14,9 @@ class NomineeFactory extends Factory
     public function definition()
     {
         return [
-            //
+        'election_id' => 1,
+        'position_id' => 1,
+        'user_id' => 1,
         ];
     }
 }

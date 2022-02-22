@@ -33,11 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         ResetPassword::createUrlUsing(function ($user, string $token) {
             return env('APP_URL').'/reset-password/'.urlencode($user->email).'/'.$token;
         });
-
-
         // /email/verify/id/hash/expires/signature
         VerifyEmail::createUrlUsing(function ($notifiable) {
-            $frontendUrl = env('APP_URL').'/email/verify';
             $verifyUrl = URL::temporarySignedRoute(
                 'verification.verify',
                 Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
@@ -46,7 +43,16 @@ class AuthServiceProvider extends ServiceProvider
                     'hash' => sha1($notifiable->getEmailForVerification()),
                 ]
             );
-            return $frontendUrl . '/' . urlencode($verifyUrl);
+
+            $url = urldecode($verifyUrl);
+            $url_parse = parse_url($url);
+            $url_queries = explode('&', $url_parse['query']);
+            foreach ($url_queries as $qry) {
+                $exp = explode('=', $qry);
+                $url_qry[$exp[0]] = $exp[1];
+            }
+            $url = $url_parse['path'].'/'.$url_qry['expires'].'/'.$url_qry['signature'];
+            return env('APP_URL').str_replace('/jokili_api/public/api', '', $url);
         });
     }
 }

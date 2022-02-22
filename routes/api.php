@@ -12,6 +12,7 @@ use App\Http\Controllers\NomineeController;
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ElectionResultController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ use App\Http\Controllers\ElectionResultController;
 */
 // Login
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/new_register', [RegisteredUserController::class, 'store']);
 // Password Reset
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('guest')->name('password.email');
 Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->middleware('guest')->name('password.reset');

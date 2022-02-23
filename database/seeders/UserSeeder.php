@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'birthplace' => 'Caracas',
             'godfather' => null,
             'number' => 63,
-            'position' => 'Jokili',
+            'rank' => 9,
             'zunftrat_in' => '2013-02-02',
             'zunftrat_out' => '2018-04-01',
             'member_since' => '1994-02-02',

@@ -23,6 +23,8 @@ class UserController extends Controller
         'users.role',
         // UserData
         'user_data.*',
+        // Rank',
+        'ranks.name as rank_name',
         // Country
         'countries.name as country_name',
         'countries.region as country_region',
@@ -57,6 +59,7 @@ class UserController extends Controller
         $uq->select($this->data_select);
         // Join
         $uq->join('user_data', 'users.id', '=', 'user_data.user_id');
+        $uq->join('ranks', 'user_data.rank', '=', 'ranks.id');
         $uq->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');
         
         $uq->orderBy('users.last_name');
@@ -102,6 +105,7 @@ class UserController extends Controller
         $uq->with('elections');
         // Join
         $uq->join('user_data', 'users.id', '=', 'user_data.user_id');
+        $uq->join('ranks', 'user_data.rank', '=', 'ranks.id');
         $uq->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');
         $uq->leftJoin('users as godfathers', 'user_data.godfather', '=', 'godfathers.id');
         $user = $uq->first();
@@ -140,7 +144,7 @@ class UserController extends Controller
                 'birth_at' => $request->birth_at,
                 'birthplace' => $request->birthplace,
                 'number' => $request->number,
-                'position' => $request->position,
+                'rank' => $request->rank,
                 'member_since' => $request->member_since,
                 'mask' => $request->mask,
                 'godfather' => $request->godfather,
@@ -177,6 +181,7 @@ class UserController extends Controller
         $gf->whereIn('users.role', ['member','admin','superadmin']);
         // Join
         $gf->join('user_data', 'users.id', '=', 'user_data.user_id');
+        $gf->join('ranks', 'user_data.rank', '=', 'ranks.id');
         $gf->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');
         $gf->leftJoin('users as godfathers', 'user_data.godfather', '=', 'godfathers.id');
         // Order

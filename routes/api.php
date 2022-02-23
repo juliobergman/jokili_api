@@ -5,6 +5,7 @@ use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RankController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CountryController;
@@ -64,10 +65,9 @@ Route::middleware('auth:sanctum')->prefix('/upload')->group(function(){
     Route::post('/avatar/user', [UploadController::class, 'useravatar']);
 });
 
-// Country
-Route::middleware('auth:sanctum')->prefix('/country')->group(function(){
-    Route::get('/', [CountryController::class, 'index']);
-});
+// Resources
+Route::get('/country', [CountryController::class, 'index'])->middleware(['auth:sanctum']);
+Route::get('/rank', [RankController::class, 'index'])->middleware(['auth:sanctum']);
 
 
 

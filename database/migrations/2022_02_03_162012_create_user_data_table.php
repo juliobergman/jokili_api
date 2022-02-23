@@ -32,7 +32,8 @@ class CreateUserDataTable extends Migration
             $table->string('birthplace')->nullable();
             // Jokili Data
             $table->bigInteger('number')->nullable();
-            $table->string('position')->nullable();
+            $table->unsignedBigInteger('rank')->default(13);
+            $table->foreign('rank')->references('id')->on('ranks');
             $table->date('member_since')->nullable();
             $table->boolean('mask')->default(false);
             $table->unsignedBigInteger('godfather')->nullable();

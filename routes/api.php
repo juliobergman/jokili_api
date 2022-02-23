@@ -35,19 +35,16 @@ Route::post('/reset-password', [AuthController::class, 'updatePassword'])->middl
 // Verify Email
 Route::post('/email/verification-notification', [AuthController::class, 'emailVerificationSend'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'emailVerificationVerify'])->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
+
 // User
 Route::middleware('auth:sanctum')->prefix('/user')->group(function(){
     Route::get('/auth', [AuthController::class, 'auth']);
     Route::get('/show/{user}', [UserController::class, 'show']);
     Route::put('/update/{user}', [UserController::class, 'update']);
     Route::get('/godfathers', [UserController::class, 'godfathers']);
+    Route::get('/role/{role?}', [UserController::class, 'role']);
+    Route::get('/group/{group?}', [UserController::class, 'group']);
     // -----------------------------------------------------------
-    Route::get('/', [UserController::class, 'index']);
-    // -----------------------------------------------------------
-    Route::post('/store', [UserController::class, 'store']);
-    Route::get('/create', [UserController::class, 'create']);
-    Route::get('/edit', [UserController::class, 'edit']);
-    Route::get('/destroy/{user}', [UserController::class, 'destroy']);
 });
 
 // Elections

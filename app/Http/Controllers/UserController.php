@@ -30,7 +30,59 @@ class UserController extends Controller
         'countries.latitude as country_latitude',
         'countries.longitude as country_longitude',
     ];
-    
+
+    public function role(Request $request, $role = null)
+    {
+        
+        $user = $request->user();
+
+
+        
+
+        $uq = User::query();
+        // Where
+        $uq->where('users.id', '!=', $user->id);
+        $uq->where('users.role', '!=', 'superadmin');
+        if($user->role == 'subscriber' || $user->role == 'applicant'){
+            return new JsonResponse(['message' => 'Access Denied'], 401);
+        }
+        if($user->role == 'member'){
+            $uq->where('users.role', '!=', 'subscriber');
+            $uq->where('users.role', '!=', 'applicant');
+        }
+        if($role){
+            $uq->where('role', $role);
+        }
+        // Selects
+        $uq->select($this->data_select);
+        // Join
+        $uq->join('user_data', 'users.id', '=', 'user_data.user_id');
+        $uq->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');
+        
+        $uq->orderBy('users.last_name');
+
+        // $uq->limit(8);
+
+        $members = $uq->get();
+        
+        return $members;
+    }
+
+    public function group(Request $request, $group = 'role')
+    {
+        $data = collect($this->role($request));
+        $total_users = $data->count();
+        $grouped = $data->groupBy($group);
+
+        foreach ($grouped as $key => $value) {
+            $users[$key] = $value;
+            $users[$key.'_count'] = $value->count();
+            $users[$key.'_ratio'] = $value->count() / $total_users;
+        }
+        $users['total'] = $total_users;
+
+        return $users;
+    }
     
     public function show(User $user)
     {
@@ -53,11 +105,6 @@ class UserController extends Controller
         $uq->leftJoin('countries', 'user_data.country', '=', 'countries.iso2');
         $uq->leftJoin('users as godfathers', 'user_data.godfather', '=', 'godfathers.id');
         $user = $uq->first();
-
-        // Display Name
-        $dname = explode(' ', $user->first_name);
-        $dlast = explode(' ', $user->last_name);
-        $displayName = $dname[0].' '.$dlast[0];
         
         return $user;
 

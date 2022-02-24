@@ -33,13 +33,13 @@ class UserSeeder extends Seeder
             'address' => 'Cerrada Gutt',
             'citizenship' => 'VE',
             'id_prefix' => 'V-',
-            'id_number' => '18.816.816',
+            'id_number' => '09.465.489',
             'occupation' => 'Desarrollador',
             'gender' => 'male',
-            'birth_at' => '1988-07-27',
+            'birth_at' => '1990-01-27',
             'birthplace' => 'Caracas',
             'godfather' => null,
-            'number' => 63,
+            'number' => 58,
             'rank' => 9,
             'zunftrat_in' => '2013-02-02',
             'zunftrat_out' => '2018-04-01',
@@ -62,14 +62,14 @@ class UserSeeder extends Seeder
         ])
         ->create();
 
-
+        // Test Api Token
         DB::table('personal_access_tokens')->insert([
             'id' => 1,
             'tokenable_type' => 'App\Models\User',
             'tokenable_id' => 1,
             'name' => 'MainToken',
             'token' => 'fa842a78e1c227cf10a86a0364214a4e8e6acc6e3ab0a003c1cdf6197d562ad1',
-            'abilities' => '["server:admin"]',
+            'abilities' => '',
             'last_used_at' => now(),
         ]);
 

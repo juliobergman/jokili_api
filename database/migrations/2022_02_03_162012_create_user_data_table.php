@@ -18,7 +18,6 @@ class CreateUserDataTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             // Contact Data
             $table->string('phone')->nullable();
-            $table->string('site')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->text('address')->nullable();

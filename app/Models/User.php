@@ -67,6 +67,7 @@ class User extends Authenticatable
         'is_member',
         'is_applicant',
         'voted',
+        'abroad',
         'member_since_year',
     ];
 
@@ -131,6 +132,10 @@ class User extends Authenticatable
     public function getVotedAttribute()
     {
         return VerifyUserVote::where('user_id', $this->id)->first() ? true : false;
+    }
+    public function getAbroadAttribute()
+    {
+        return $this->country != "VE" ? true : false;
     }
 
     public function userdata()

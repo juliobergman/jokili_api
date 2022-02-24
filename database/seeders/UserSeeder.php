@@ -28,7 +28,6 @@ class UserSeeder extends Seeder
         ->has(UserData::factory()->state([
             'avatar' => '/storage/factory/avatar/misc/stormtrooper.jpg',
             'phone' => '+58 412 000 0000',
-            'site' => 'juliobergman.com',
             'country' => 'VE',
             'city' => 'Colonia Tovar',
             'address' => 'Cerrada Gutt',
@@ -76,7 +75,7 @@ class UserSeeder extends Seeder
 
         // Members
     
-        User::factory(50)
+        User::factory(100)
         ->has(
             UserData::factory()
             ->state(new Sequence(

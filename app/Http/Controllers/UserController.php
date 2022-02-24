@@ -132,7 +132,6 @@ class UserController extends Controller
             ],
             'userdata' => [
                 'phone' => $request->phone,
-                'site' => $request->site,
                 'country' => $request->country,
                 'city' => $request->city,
                 'address' => $request->address,

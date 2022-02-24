@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->prefix('/user')->group(function(){
     Route::get('/godfathers', [UserController::class, 'godfathers']);
     Route::get('/role/{role?}', [UserController::class, 'role']);
     Route::get('/group/{group?}', [UserController::class, 'group']);
+    Route::get('/statistics', [UserController::class, 'statistics']);
     // -----------------------------------------------------------
 });
 

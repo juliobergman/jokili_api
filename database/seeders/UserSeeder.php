@@ -75,12 +75,21 @@ class UserSeeder extends Seeder
 
         // Members
     
-        User::factory(100)
+        User::factory(430)
         ->has(
             UserData::factory()
             ->state(new Sequence(
+                ['gender' => null],
                 ['gender' => 'male'],
-                ['gender' => 'female']
+                ['gender' => 'female'],
+                ['gender' => 'male'],
+                ['gender' => 'female'],
+            ))
+            ->state(new Sequence(
+                ['country' => 'VE'],
+                ['country' => 'VE'],
+                ['country' => 'DE'],
+                ['country' => 'US'],
             ))
             ->state(new Sequence(
                 ['avatar' => '/storage/factory/avatar/male/avatar-1.jpg'],

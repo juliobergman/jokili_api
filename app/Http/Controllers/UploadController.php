@@ -57,6 +57,7 @@ class UploadController extends Controller
         $img = Image::make($file->getRealPath());
         $name = $hash.'.'.$ext;
         $path = storage_path('app/public/avatars/'.$folder.'/'.$user_id.'/'.$name);
+        $img->orientate();
         $img->fit($this->avsize['width'], $this->avsize['height'], function ($constraint) {
             $constraint->upsize();
         });

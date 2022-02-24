@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
 
         // Members
     
-        User::factory(430)
+        User::factory(99)
         ->has(
             UserData::factory()
             ->state(new Sequence(
